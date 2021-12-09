@@ -1,75 +1,105 @@
 import React, { useState, useEffect } from "react";
 import s from "../styles/Style";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import * as RootNavigation from "../Components/RootNavigation";
 import axios from "axios";
+import { ImageBackground } from "react-native";
 import {
+  VStack,
   Text,
+  Input,
+  Button,
+  Icon,
   Box,
   AspectRatio,
   Image,
   Heading,
   NativeBaseProvider,
   ScrollView,
+  Center,
 } from "native-base";
 
+const config = {
+  dependencies: {
+    "linear-gradient": require("expo-linear-gradient").LinearGradient,
+  },
+};
+
 export default function Home(props) {
-  const [query, setQuery] = useState([""]);
+  const [input, setInput] = useState("");
+  const [query, setQuery] = useState([]);
   let token = props.route.params.accessToken;
   useEffect(() => {
     const fetch = () => {
       axios
-        .get("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + token)
+        .get(
+          "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" +
+            token
+        )
         .then((response) => {
-          setQuery(response);
-          console.log(response.data)
+          setQuery(response.data);
         })
         .catch((err) => console.log(err));
-      // console.log(result.data.data.results)
     };
     fetch();
   }, []);
 
   return (
     <NativeBaseProvider>
-      <ScrollView>
-          <Box
-            
-            rounded="lg"
-            overflow="hidden"
-            width="80%"
-            mb={5}
-            left={10}
-            _light={{ backgroundColor: "gray.50" }}
-            _dark={{ backgroundColor: "black" }}
-          >
-            <Box backgroundColor={"black"}>
-              <Heading
-            
-                textAlign="center"
-                fontSize={20}
-                color={"white"}
-              >
-              </Heading>
-              <AspectRatio ratio={16 / 9}>
-                <Image
-                  alt="image"
+      <Box style={s.welcome}>
+        <Heading textAlign="left">Welcome</Heading>
+        <Text>{query.name}</Text>
+      </Box>
+
+      <Center>
+        <Box>
+          <VStack width="90%" space={2} alignItems="center">
+            <Text mt={20}>Search for the best drinks</Text>
+            <Input
+              placeholder="Search"
+              width="100%"
+              borderRadius="4"
+              onChangeText={setInput}
+              py="3"
+              px="4"
+              fontSize="14"
+              _web={{
+                _focus: {
+                  borderColor: "muted.200",
+                  style: { boxShadow: "none" },
+                },
+              }}
+              InputRightElement={
+                <Icon
+                  m="2"
+                  mr="3"
+                  size="6"
+                  color="gray.400"
+                  as={<MaterialIcons name="search" />}
                 />
-              </AspectRatio>
-              <Text textAlign="center" p={2} color={"white"}>
-              </Text>
-            </Box>
-          </Box>
-      </ScrollView>
+              }
+            />
+          </VStack>
+          <VStack>
+            <Button
+              mt={4}
+              onPress={() => RootNavigation.navigate({ name: "DrinkResult", params: {input : input} })}
+            >
+              Search
+            </Button>
+          </VStack>
+          <VStack>
+          <Text mt={20} textAlign={"center"}>Discover your Drinks of the day</Text>
+            <Button
+              mt={4}
+              onPress={() => RootNavigation.navigate({ name: "RandomDrink" })}
+            >
+              Drinks Random
+            </Button>
+          </VStack>
+        </Box>
+      </Center>
     </NativeBaseProvider>
   );
 }
-
-
-
-
-const config = {
-  dependencies: {
-    "linear-gradient": require("expo-linear-gradient").LinearGradient,
-  },
-}; 
-

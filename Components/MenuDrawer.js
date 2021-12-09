@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import Home from "../Views/Home";
-import MovieCard from "../Views/MovieCard";
 import Category from "../Views/Category";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Menu from "./Menu";
@@ -18,7 +17,6 @@ export default function MenuDrawer(props) {
       >
         <Drawer.Screen name="Home" component={Home} {...props}  />
         <Drawer.Screen name="Category" component={Category} />
-        <Drawer.Screen name="MovieCard" component={MovieCard} />
       </Drawer.Navigator>
     
   );
