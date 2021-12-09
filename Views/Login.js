@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import * as Google from "expo-auth-session/providers/google";
 import * as RootNavigation from "../Components/RootNavigation";
 import s from "../styles/Style";
-import { Box, Image, NativeBaseProvider, Button } from "native-base";
+import { Box, Image, NativeBaseProvider, Button, Heading } from "native-base";
 
 export default function Login({ navigation }) {
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -28,6 +28,7 @@ export default function Login({ navigation }) {
         resizeMode="cover"
         style={s.image}
       >
+        <Heading style={s.logotitle}>Drinks app</Heading>        
         <Box>
           <Image
             style={s.userImagenLogin}

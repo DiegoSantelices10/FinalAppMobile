@@ -170,7 +170,16 @@ export default {
     resizeMode: "cover",
     width: 360,
     margin: 31,
-    marginTop: 170,
+    marginTop: 70,
+  },
+  logotitle:{
+color: "#f0f9ff",
+textAlign: "center",
+marginTop: 200,
+fontSize: 50,
+paddingTop: 50
+
+
   },
 
 
